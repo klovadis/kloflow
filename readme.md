@@ -77,13 +77,54 @@ The `.Serial` function allows you to sequentially execute functions that are pro
 
 Each function has to expect an `error` as first argument; Any other can be designed as you wish. If an error occurs in any of the functions, the last function in the list will be called directly - skipping the functions in between. This means that you only need to throw errors in the last function.
 
-   // todo: example
-   
+	var Serial = require('./lib/flow').Serial;
+	
+	Serial(
+		function () {
+			// call next function, no error, two arguments
+			this(null, 'dog', 'green');
+		},
+		function (err, animal, color) {
+			// output provided data
+			console.log('Animal:', animal, color);
+			var result = 'A ' + color + ' ' + animal + ' is a funny animal.';
+			this(null, result);
+		},
+		function (err, sentence) {
+			if (err) return console.log('An error occurred:', err);
+			console.log('Sentence:', sentence);	
+			//this(null);	
+		}
+	);
+
 ## .Queue
 
 `Queue` is a class which executes functions that are designed to take longer sequentially. Use `var MyQueue = new require('./kloflow').Queue()` and from thereon `MyQueue.add( [function () ] );`. The supplied function should call `this();` once it has finished in order to invode the next function in line.
 
-    // todo: example  
+	// include library
+	var Queue = require('./lib/flow').Queue;
+	
+	// create new queue object
+	var MyQueue = new Queue();
+	
+	// basic usage
+	MyQueue.add(function() {
+	    /* do something here */
+		console.log('We DID something.');
+		this();
+	});
+	
+	// you can also supply arguments to 
+	// that function when it's called:
+	MyQueue.add( 'some_data', function (data) {
+	    // output supplied data
+	    console.log('We recieved data:', data);
+	    
+	    // next!
+	    this();
+	});
+	
+This example will run the two functions one after the other. Use a setTimeout(this, 1000) in between if you want to test functions that take a long time.
     
 ## LICENSE
 
