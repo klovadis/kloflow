@@ -14,6 +14,7 @@ The export `.Parallel` allows you to run multiple functions in parallel and call
     // run two functions in parallel and call the last
     // function when all calculations are done or if
     // an error occurred.
+    
     Parallel(
     	
         function (done) { 
@@ -48,7 +49,7 @@ The last function that is supplied however will be called once all the other fun
 The use of this function is to i.e. fetch data from different sources in parallel and then provide that data to one single callback function. You could for example grab data from different database collections at the same time instead of having to wait for the first result.
 
     // include the library
-    var Parallel = require('./kloflow');
+    var Parallel = require('./kloflow').Parallel;
     
     // imagine, those functions are defined
     // function getUsersFromDb() {}
@@ -69,3 +70,21 @@ The use of this function is to i.e. fetch data from different sources in paralle
     	    console.log(users, data, logresult);
     	}
     );
+
+## .Serial
+
+The `.Serial` function allows you to sequentially execute functions that are provided. Use it like `Serial( f1, f2, .. fn )` whereas each function should expect an argument `error` as first argument and call `this(error, args)` once it's ready.
+
+Each function has to expect an `error` as first argument; Any other can be designed as you wish. If an error occurs in any of the functions, the last function in the list will be called directly - skipping the functions in between. This means that you only need to throw errors in the last function.
+
+   // todo: example
+   
+## .Queue
+
+`Queue` is a class which executes functions that are designed to take longer sequentially. Use `var MyQueue = new require('./kloflow').Queue()` and from thereon `MyQueue.add( [function () ] );`. The supplied function should call `this();` once it has finished in order to invode the next function in line.
+
+    // todo: example  
+    
+## LICENSE
+
+All code is licensed under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
