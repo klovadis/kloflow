@@ -4,9 +4,9 @@ This is a self-written flow control library that currently exports three functio
 
 It's easy to use and lightweight, but thorough testing is pending. There are many flow control libraries for [Node.JS](http://nodejs.org/) and JavaScript in general, but in order to get more into Node and server-side JavaScript, I created my own.
 
-## Parallel
+## .Parallel
 
-The export `.Parallel` allows you to run multiple functions in parallel and call a callback function once all of them have finished.
+The export `.Parallel` allows you to run multiple functions in parallel and call a callback function once all of them have finished. Use`Parallel ( function f1, function f2, .. , function (err, f1Data, f2Data, ..) );` and provide any amount (2+) of functions as arguments. 
 
     // include the library
     var Parallel = require('./kloflow');
@@ -20,7 +20,7 @@ The export `.Parallel` allows you to run multiple functions in parallel and call
         	/* function 1, do something async here */
         	
         	// call done(); once youre ready
-        	next(done, 'data_1');
+        	done(null, 'data_1');
         },
         
         function (done) {
@@ -40,8 +40,6 @@ The export `.Parallel` allows you to run multiple functions in parallel and call
             console.log(err, f1Result, f2Result);
         }
     );
-
-Usage: `Parallel ( function f1, function f2, .. , function (err, f1Data, f2Data, ..) );` - Provide any amount of functions to `Parallel()`. 
 
 Each of those functions will recieve an argument `done` when called, which is a callable `function (err, result)` which you should call once you're done. Instead of calling `done(null, result)`, you can also call `this(null, result)` - have it your way.
 
