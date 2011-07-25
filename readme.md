@@ -126,8 +126,12 @@ Each function has to expect an `error` as first argument; Any other can be desig
 	
 This example will run the two functions one after the other. Use a `setTimeout(this, 1000)` in a queue item if you want to test functions that take a long time.
 
-When creating a Queue object, you may also provide a timeout in milliseconds that will skip to the next function in queue if the current one takes too long, i.e. `var MyQueue = new Queue(5000)` - Operations that take longer than 5000ms will be timed out. 
-    
+When creating a Queue object, you may also provide a timeout in milliseconds that will skip to the next function in queue if the current one takes too long, i.e. `var MyQueue = new Queue(5000);` - Operations that take longer than 5000ms will be timed out. 
+
+## TO DO
+
+Add examples and tests.
+
 ## LICENSE
 
 All code is licensed under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
