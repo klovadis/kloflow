@@ -99,7 +99,9 @@ Each function has to expect an `error` as first argument; Any other can be desig
 
 ## .Queue
 
-`Queue` is a class which executes functions that are designed to take longer sequentially. Use `var MyQueue = new require('./kloflow').Queue()` and from thereon `MyQueue.add( [function () ] );`. The supplied function should call `this();` once it has finished in order to invode the next function in line.
+`Queue` is a class which executes functions that are designed to take longer sequentially. Use `var MyQueue = new require('./kloflow').Queue()` and from thereon `MyQueue.add( [function () ] );`. 
+
+The supplied function should call `this();` once it has finished in order to invode the next function in line. Also, you may specify more arguments to `myQueue.add()` which will be provided to the function when it will be executed.
 
 	// include library
 	var Queue = require('./lib/flow').Queue;
@@ -116,15 +118,15 @@ Each function has to expect an `error` as first argument; Any other can be desig
 	
 	// you can also supply arguments to 
 	// that function when it's called:
-	MyQueue.add( 'some_data', function (data) {
+	MyQueue.add( function (data) {
 	    // output supplied data
 	    console.log('We recieved data:', data);
 	    
 	    // next!
 	    this();
-	});
+	}, 'some_data');
 	
-This example will run the two functions one after the other. Use a `setTimeout(this, 1000)` in a queue item if you want to test functions that take a long time.
+This example will run the two functions one after the other. See `test/test.queue.js` for more examples.
 
 When creating a Queue object, you may also provide a timeout in milliseconds that will skip to the next function in queue if the current one takes too long, i.e. `var MyQueue = new Queue(5000);` - Operations that take longer than 5000ms will be timed out. 
 
