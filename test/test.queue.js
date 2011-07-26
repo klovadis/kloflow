@@ -1,5 +1,5 @@
 
-var Queue = new (require('./index.js').Queue)(1000);
+var Queue = new (require('../lib/index.js').Queue)(1000);
 
 
 // Only add a function as argument
